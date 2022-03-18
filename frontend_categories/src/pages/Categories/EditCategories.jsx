@@ -1,7 +1,7 @@
 import React from 'react'
 import { Formik, Field } from 'formik';
 import * as yup from 'yup';
-import { Form, InputGroup, Button, Spinner, Table, Container, Row, Col } from 'react-bootstrap'
+import { Form, Button, Row, Col } from 'react-bootstrap'
 import { createCategory } from '../../services/CategoryService';
 import { useNavigate } from 'react-router-dom';
 
