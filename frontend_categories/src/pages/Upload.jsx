@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Form, Row, Col, Spinner, Alert, Nav } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom';
+import { sendFile } from '../services/CategoryService';
 
 
 
@@ -29,14 +30,10 @@ const Upload = () => {
 
         try {
             setLoading(true)
-            const formData = new FormData();
-            formData.append('File', selectedFile);
-            var response = await fetch('http://127.0.0.1:8000/api/process_file/', 
-                                        { method: 'POST', body: formData }
-                                       );
-            response = await response.json()
+                        
+            var response = await sendFile(selectedFile)
             
-            response.error ? setErrorMessage('Error al procesar tu archivo. Es posible que las categorías ya existan.')  : setSuccessMessage(`Total de categorías insertadas: ${response.total_inserted}`) 
+            response.data.error ? setErrorMessage('Error al procesar tu archivo. Es posible que las categorías ya existan.')  : setSuccessMessage(`Total de categorías insertadas: ${response.data.total_inserted}`) 
                              
             
             

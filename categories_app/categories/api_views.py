@@ -1,9 +1,12 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 import xml.etree.ElementTree as ET
+
+from .serializers import CategorySerializer
 from .models import Category
 from rest_framework import status
 import logging
+from rest_framework.viewsets import ModelViewSet
 
 
 class ProcessFile(APIView):
@@ -68,8 +71,35 @@ class ProcessFile(APIView):
                 parent_id = Category(id=int(self.find(category, 'CategoryParentID'))),
             )
 
+class CategoryViewSet(ModelViewSet):
+    """
+    A viewset for viewing and editing user instances.
+    """
+    serializer_class = CategorySerializer
+    queryset = Category.objects.all().order_by('level')
 
-    
+    '''
+    def get_queryset(self):
+        """
+        Get the list of items for this view.
+        This must be an iterable, and may be a queryset.
+        Defaults to using `self.queryset`.
+        This method should always be used rather than accessing `self.queryset`
+        directly, as `self.queryset` gets evaluated only once, and those results
+        are cached for all subsequent requests.
+        You may want to override this if you need to provide different
+        querysets depending on the incoming request.
+        (Eg. return a list of items that is specific to the user)
+        """
+        assert self.queryset is not None, (
+            "'%s' should either include a `queryset` attribute, "
+            "or override the `get_queryset()` method."
+            % self.__class__.__name__
+        )
 
-    
-    
+        queryset = self.queryset
+        if isinstance(queryset, QuerySet):
+            # Ensure queryset is re-evaluated on each request.
+            queryset = queryset.all()
+        return queryset
+    '''
