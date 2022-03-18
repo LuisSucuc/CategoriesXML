@@ -1,12 +1,13 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 import xml.etree.ElementTree as ET
-
 from .serializers import CategorySerializer
 from .models import Category
 from rest_framework import status
 import logging
 from rest_framework.viewsets import ModelViewSet
+from rest_framework.pagination import PageNumberPagination
+from collections import OrderedDict
 
 
 class ProcessFile(APIView):
@@ -71,35 +72,31 @@ class ProcessFile(APIView):
                 parent_id = Category(id=int(self.find(category, 'CategoryParentID'))),
             )
 
+
+
+class CustomPagination(PageNumberPagination):
+    '''Override PageNumberPagination
+    to get next and previos also integers or None
+    '''
+    
+    def get_paginated_response(self, data):
+        return Response(OrderedDict([
+            ('count', self.page.paginator.count),
+            ('current', self.page.number),
+            ('next', self.page.next_page_number() if self.page.has_next() else None),
+            ('previous', self.page.previous_page_number()  if self.page.has_previous() else None ),
+            ('final', self.page.paginator.num_pages),
+            
+            ('results', data)
+            
+        ]))
+        
 class CategoryViewSet(ModelViewSet):
     """
-    A viewset for viewing and editing user instances.
+    Viewset for Category Models, with personalized pagination class.
     """
+    pagination_class = CustomPagination
     serializer_class = CategorySerializer
-    queryset = Category.objects.all().order_by('level')
+    queryset = Category.objects.all().order_by('name')
 
-    '''
-    def get_queryset(self):
-        """
-        Get the list of items for this view.
-        This must be an iterable, and may be a queryset.
-        Defaults to using `self.queryset`.
-        This method should always be used rather than accessing `self.queryset`
-        directly, as `self.queryset` gets evaluated only once, and those results
-        are cached for all subsequent requests.
-        You may want to override this if you need to provide different
-        querysets depending on the incoming request.
-        (Eg. return a list of items that is specific to the user)
-        """
-        assert self.queryset is not None, (
-            "'%s' should either include a `queryset` attribute, "
-            "or override the `get_queryset()` method."
-            % self.__class__.__name__
-        )
 
-        queryset = self.queryset
-        if isinstance(queryset, QuerySet):
-            # Ensure queryset is re-evaluated on each request.
-            queryset = queryset.all()
-        return queryset
-    '''

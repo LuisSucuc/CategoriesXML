@@ -5,7 +5,7 @@ import Upload from "./pages/Upload";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Menu from "./components/Menu";
 import NoMatch from "./pages/NoMatch";
-import Categories from "./pages/Categories";
+import Categories from "./pages/Categories/Categories";
 
 
 export default function App() {
