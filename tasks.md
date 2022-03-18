@@ -1,3 +1,1 @@
-- .envs
 - docker
-- CORS
