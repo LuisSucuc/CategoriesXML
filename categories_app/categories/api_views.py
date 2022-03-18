@@ -100,3 +100,12 @@ class CategoryViewSet(ModelViewSet):
     queryset = Category.objects.all().order_by('name')
 
 
+    def get_queryset(self):
+        # Apply select_related to decrease the number
+        # of queries and convert it into a join query
+        return self.queryset.select_related('parent_id')
+
+
+
+
+

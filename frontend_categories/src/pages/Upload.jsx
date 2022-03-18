@@ -56,7 +56,7 @@ const Upload = () => {
                         < Alert.Heading> </Alert.Heading >
                         <h4> {successMessage}</h4>
                         <hr />
-                        <Nav.Link  to="/Categories">
+                        <Nav.Link  to="/categories">
                             <Button className="text-center mt-2" variant="primary" type="button" onClick={() => navigate('/categories') } >
                                 Ver Categorías
                             </Button>

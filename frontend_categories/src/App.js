@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Menu from "./components/Menu";
 import NoMatch from "./pages/NoMatch";
 import Categories from "./pages/Categories/Categories";
+import EditCategories from "./pages/Categories/EditCategories";
 
 
 export default function App() {
@@ -17,8 +18,11 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Menu />}>
           <Route index element={<Upload />} />
-          <Route path="Categories" element={<Categories />} />
+          <Route path="categories" element={<Categories />} />
+          <Route path="categories/:id/" element={<EditCategories />} />
+          <Route path="categories/add/" element={<EditCategories />} />
           <Route path="reports" element={<Reports />} />
+          
 
           {/* Using path="*"" means "match anything", so this route
                 acts like a catch-all for URLs that we don't have explicit

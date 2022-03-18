@@ -14,6 +14,8 @@ const Category = ({category}) => {
           <CategoryBoolean value={category.best_offer_enabled} />
           <CategoryBoolean value={category.leaf} />
           <CategoryBoolean value={category.lds} />
+          <td>Edit</td>
+          <td>Delete</td>
       </tr>       
   )
 }

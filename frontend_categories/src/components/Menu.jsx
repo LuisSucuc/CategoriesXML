@@ -14,7 +14,7 @@ const Menu = () => {
                             <Nav.Link as={Link} to="/">
                                  Upload
                             </Nav.Link>
-                            <Nav.Link as={Link} to="/Categories">
+                            <Nav.Link as={Link} to="/categories">
                                 Categories
                             </Nav.Link>
                         </Nav>

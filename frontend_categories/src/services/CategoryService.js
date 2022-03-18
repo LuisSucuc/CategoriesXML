@@ -8,6 +8,10 @@ export const sendFile = (file) => {
 
 
 export const getCategories = (page=1) => {
-
     return CategoryRequest.get(`category/?page=${page}`);
+}
+
+
+export const createCategory = (payload) => {
+    return CategoryRequest.post(`category/`, payload);
 }
